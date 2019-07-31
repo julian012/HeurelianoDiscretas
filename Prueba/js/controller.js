@@ -5,11 +5,11 @@ angular.module('app',[])
         $scope.rows = 0;
         $scope.matrizHeader = [];
         $scope.matrixToSend = [];
-
+        $scope.cycle = '';
         $scope.loadMatriz = function () {
             $scope.matriz = new Array($scope.nodescount);
             $scope.matrizHeader = new Array($scope.nodescount);
-            console.log($scope.matriz.length);
+            //console.log($scope.matriz.length);
             for (let i = 0; i < $scope.matriz.length; i++) {
                 $scope.matriz[i] = new Array($scope.nodescount);
                 $scope.matrizHeader[i] = i;
@@ -17,7 +17,7 @@ angular.module('app',[])
                     $scope.matriz[i][j] = 0;
                 }
             }
-            console.log($scope.matriz);
+            //console.log($scope.matriz);
         }
 
         $scope.generateMatriz = function () {
@@ -29,50 +29,64 @@ angular.module('app',[])
                     id: i, label: `${i}`
                 });
             }
-            console.log($scope.nodesMatrix);
+            //console.log($scope.nodesMatrix);
             for (let i = 0; i < $scope.matriz.length; i++) {
                 for (let j = 0; j < $scope.matriz[i].length; j++) {
-                    console.log($scope.matriz[i][j], i,j);
+                    //console.log($scope.matriz[i][j], i,j);
                     if($scope.matriz[i][j] > 0){
-                        console.log("Entro");
+                        //console.log("Entro");
                         $scope.edgesMatrix.push({from: i, to:j});
                     }
                 }
             }
-            console.log($scope.edgesMatrix);
+            //console.log($scope.edgesMatrix);
             $scope.data = {
                 nodes: $scope.nodesMatrix,
                 edges: $scope.edgesMatrix
             };
             $scope.network = new vis.Network($scope.container, $scope.data, {});
-
+            $scope.calculateCycle();
             //{A:C, B:[C,D], C:[B:D], D:A}
 
         };
 
         $scope.calculateCycle = function () {
-            $scope.matrixToSend = [];
+            $scope.matrixToSend = '{';
             for (let i = 0; i < $scope.matriz.length; i++) {
-                let relations = [];
+                let relations = `"${i}"` + ': [';
+                let count = 0;
                 for (let j = 0; j < $scope.matriz[i].length; j++) {
                     if($scope.matriz[i][j] > 0){
-                        relations.push(j);
+                        if(count === 0){
+                            relations += '' + j ;
+                        }else{
+                            relations += ',' + j ;
+                        }
+                        count++;
                     }
                 }
-                if (relations.length > 0) {
-                    $scope.matrixToSend.push({[i]: relations});
+                if(i === ($scope.matriz.length - 1)){
+                    relations += ']';
+                }else {
+                    relations += '],';
                 }
-
+                $scope.matrixToSend += relations;
             }
-            console.log($scope.matrixToSend);
+            $scope.matrixToSend += '}';
+            console.log(JSON.parse($scope.matrixToSend));
             if ($scope.matrixToSend.length > 0) {
                 sendMatrix();
             }
         };
 
         function sendMatrix() {
-            $http.put('http://localhost:3000/graph', $scope.matrixToSend).then((response) => {
-                console.log(response);
+            $http.put('http://localhost:3000/graph', JSON.parse($scope.matrixToSend)).then((response) => {
+                console.log(response.data.length);
+                if(response.data.length !== 0){
+                    $scope.cycle = response.data;
+                }else{
+                  $scope.cycle = 'No existe ciclo hamiltoniano';
+                }
             }, (error) => {
                 console.log(error.message);
             });
