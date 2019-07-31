@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="es" data-ng-app="app">
+<head>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/vis.min.js"></script>
+    <script src="../js/controller.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+</head>
+<body data-ng-controller="Controller">
+<div>
+    <div class="row">
+        <div class="col-4">
+            <div class="container panel-body" style="text-align: center">
+                    <h1><span class="badge badge-primary">Definir Matriz</span></h1>
+                <div class="row" style="text-align: center">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col">
+                                Número de nodos
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" ng-model="nodescount" min="3" width="100%">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button data-ng-click="loadMatriz()">Cargar matriz</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <div class="container">
+                <div id="matriz" style="text-align: center; align-items: center">
+                    <table style="text-align: center">
+                        <thead>
+                        <tr class="black-text text-center" style="text-align: center">
+                            <th style="width: 30px"> -</th>
+                            <th ng-repeat="head in matrizHeader">{{head}}</th>
+                        </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        <tr ng-repeat="row in matriz" style="text-align: center">
+                            <td style="width: 30px">
+                                <b>{{$index}}</b>
+                            </td>
+                            <td ng-repeat="col in row track by $index" style="width: 30px">
+                                <input ng-model="matriz[$parent.$index][$index]" ng-change="generateMatriz()" style="width: 30px">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button data-ng-click="calculateCycle()"> Calcular matriz</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4" style="text-align: center">
+            <h1><span class="badge badge-secondary">Matriz resultante</span></h1>
+            <div id="visualization" style="width: 350px; height: 350px"></div>
+        </div>
+        <div class="col-4">
+                <h1><span class="badge badge-success">Ciclo heureliano</span></h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>
