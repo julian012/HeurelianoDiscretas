@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="es"  data-ng-app="app">
+<head>
+    <script src="js/angular.min.js"></script>
+  <script src="js/vis.min.js"></script>
+  <script src="js/controller.js"></script>
+
+</head>
+<body data-ng-controller="Controller">
+    <label>Cantidad de nodos</label>
+    <input type="number"  ng-model= "nodescount">
+    <button data-ng-click="loadMatriz()">Cargar matriz</button>
+    <div id="matriz">
+        <table>
+<!--            <thead>-->
+<!--            <tr class="black-text">-->
+<!--                <th ng-repeat="">IP</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+            <tbody id="table-body">
+            <tr ng-repeat="row in matriz">
+                <td ng-repeat="col in row track by $index"><input ng-value="col" > </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="visualization" style="width: 1000px; height: 1000px"></div>
+    
+    <script type="text/javascript">
+        // create an array with nodes
+        var nodes = [
+            {id: 1, label: 'A'},
+            {id: 2, label: 'B'},
+            {id: 3, label: 'C'},
+            {id: 4, label: 'D'},
+            {id: 5, label: 'E'},
+            {id: 6, label: 'F'},
+            {id: 7, label: 'G'},
+            {id: 8, label: 'H'},
+            {id: 9, label: 'I'},
+            {id: 10, label: 'J'},
+            {id: 11, label: 'K'},
+            {id: 12, label: 'L'},
+            {id: 13, label: 'M'}
+        ];
+    
+        // create an array with edges
+        var edges = [
+            {from: 1, to: 2},
+            {from: 1, to: 8},
+            {from: 1, to: 9},
+            {from: 1, to: 7},
+            {from: 2, to: 10},
+            {from: 2, to: 4},
+            {from: 2, to: 3},
+            {from: 3, to: 10},
+            {from: 3, to: 4},
+            {from: 4, to: 5},
+            {from: 4, to: 11},
+            {from: 5, to: 11},
+            {from: 5, to: 6},
+            {from: 6, to: 7},
+            {from: 6, to: 12},
+            {from: 7, to: 8},
+            {from: 7, to: 12},
+            {from: 12, to: 11},
+            {from: 11, to: 13},
+            {from: 13, to: 9}
+        ];
+    
+        // create a network
+        var container = document.getElementById('visualization');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var network = new vis.Network(container, data, {});
+    </script>
+    
+    </body>
+</html>
