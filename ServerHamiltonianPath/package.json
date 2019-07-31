@@ -1,0 +1,28 @@
+{
+  "name": "hs-code-challenge",
+  "version": "1.0.0",
+  "description": "Determines if the graph has a Hamiltonian Path",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pmorris/HS-Hamiltonian-Path.git"
+  },
+  "author": "Philip I Morris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pmorris/HS-Hamiltonian-Path/issues"
+  },
+  "homepage": "https://github.com/pmorris/HS-Hamiltonian-Path#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "debug-log2": "^1.0.1",
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0",
+    "request": "^2.81.0"
+  }
+}
