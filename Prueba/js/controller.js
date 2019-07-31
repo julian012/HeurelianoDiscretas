@@ -4,6 +4,7 @@ angular.module('app',[])
         $scope.matriz =[];
         $scope.rows = 0;
         $scope.matrizHeader = [];
+        $scope.matrixToSend = [];
 
         $scope.loadMatriz = function () {
             $scope.matriz = new Array($scope.nodescount);
@@ -36,7 +37,6 @@ angular.module('app',[])
                         console.log("Entro");
                         $scope.edgesMatrix.push({from: i, to:j});
                     }
-
                 }
             }
             console.log($scope.edgesMatrix);
@@ -48,6 +48,34 @@ angular.module('app',[])
 
             //{A:C, B:[C,D], C:[B:D], D:A}
 
+        };
+
+        $scope.calculateCycle = function () {
+            $scope.matrixToSend = [];
+            for (let i = 0; i < $scope.matriz.length; i++) {
+                let relations = [];
+                for (let j = 0; j < $scope.matriz[i].length; j++) {
+                    if($scope.matriz[i][j] > 0){
+                        relations.push(j);
+                    }
+                }
+                if (relations.length > 0) {
+                    $scope.matrixToSend.push({[i]: relations});
+                }
+
+            }
+            console.log($scope.matrixToSend);
+            if ($scope.matrixToSend.length > 0) {
+                sendMatrix();
+            }
+        };
+
+        function sendMatrix() {
+            $http.put('http://localhost:3000/graph', $scope.matrixToSend).then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error.message);
+            });
         }
 
         $scope.getNumber = function (){

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/pmorris/HS-Hamiltonian-Path#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "cors": "^2.8.5",
     "debug-log2": "^1.0.1",
     "express": "^4.15.2"
   },
