@@ -11,26 +11,35 @@
 <div>
     <div class="row">
         <div class="col-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-4">
-                        Número de nodos
-                    </div>
-                    <div class="col-3">
-                        <input type="number" ng-model="nodescount" min="1" max="7">
-                    </div>
-                    <div class="col-5">
-                        <button data-ng-click="loadMatriz()">Cargar matriz</button>
+            <div class="container panel-body" style="text-align: center">
+                    <h1><span class="badge badge-primary">Definir Matriz</span></h1>
+                <div class="row" style="text-align: center">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col">
+                                Número de nodos
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" ng-model="nodescount" min="3" width="100%">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button data-ng-click="loadMatriz()">Cargar matriz</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
             </div>
             <div class="container">
-                <div id="matriz">
-                    <table>
+                <div id="matriz" style="text-align: center; align-items: center">
+                    <table style="text-align: center">
                         <thead>
-                        <tr class="black-text" style="text-align: center">
+                        <tr class="black-text text-center" style="text-align: center">
                             <th style="width: 30px"> -</th>
                             <th ng-repeat="head in matrizHeader">{{head}}</th>
                         </tr>
@@ -50,11 +59,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-4" style="text-align: center">
+            <h1><span class="badge badge-secondary">Matriz resultante</span></h1>
             <div id="visualization" style="width: 350px; height: 350px"></div>
         </div>
         <div class="col-4">
-
+                <h1><span class="badge badge-success">Ciclo heureliano</span></h1>
         </div>
     </div>
 </div>
