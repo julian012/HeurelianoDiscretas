@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-4">
             <div class="container panel-body" style="text-align: center">
-                    <h1><span class="badge badge-primary">Definir Matriz</span></h1>
+                <h1><span class="badge badge-primary">Definir Matriz</span></h1>
                 <div class="row" style="text-align: center">
                     <div class="col-12">
                         <div class="row">
@@ -50,7 +50,8 @@
                                 <b>{{$index}}</b>
                             </td>
                             <td ng-repeat="col in row track by $index" style="width: 30px">
-                                <input ng-model="matriz[$parent.$index][$index]" ng-change="generateMatriz()" style="width: 30px">
+                                <input ng-model="matriz[$parent.$index][$index]" ng-change="generateMatriz()"
+                                       style="width: 30px">
                             </td>
                         </tr>
                         </tbody>
@@ -64,8 +65,9 @@
             <div id="visualization" style="width: 350px; height: 350px"></div>
         </div>
         <div class="col-4">
-                <h1><span class="badge badge-success">Ciclo hamiltonianoo</span></h1>
-                <h3><span class="badge badge-success">Resultado: {{cycle}}</span></h3>
+            <h1><span class="badge badge-success">Ciclo hamiltonianoo</span></h1>
+            <h3><span class="badge badge-success">Resultado: {{cycle}}</span></h3>
+            <div id="visualizationCycle" style="width: 350px; height: 350px"></div>
         </div>
     </div>
 </div>

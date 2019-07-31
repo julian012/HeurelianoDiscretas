@@ -1,7 +1,7 @@
-angular.module('app',[])
-    .controller('Controller',['$http','$scope', ($http,$scope) => {
+angular.module('app', [])
+    .controller('Controller', ['$http', '$scope', ($http, $scope) => {
         $scope.nodescount = 0;
-        $scope.matriz =[];
+        $scope.matriz = [];
         $scope.rows = 0;
         $scope.matrizHeader = [];
         $scope.matrixToSend = [];
@@ -33,9 +33,9 @@ angular.module('app',[])
             for (let i = 0; i < $scope.matriz.length; i++) {
                 for (let j = 0; j < $scope.matriz[i].length; j++) {
                     //console.log($scope.matriz[i][j], i,j);
-                    if($scope.matriz[i][j] > 0){
+                    if ($scope.matriz[i][j] > 0) {
                         //console.log("Entro");
-                        $scope.edgesMatrix.push({from: i, to:j});
+                        $scope.edgesMatrix.push({from: i, to: j});
                     }
                 }
             }
@@ -45,8 +45,6 @@ angular.module('app',[])
                 edges: $scope.edgesMatrix
             };
             $scope.network = new vis.Network($scope.container, $scope.data, {});
-            $scope.calculateCycle();
-            //{A:C, B:[C,D], C:[B:D], D:A}
 
         };
 
@@ -56,18 +54,18 @@ angular.module('app',[])
                 let relations = `"${i}"` + ': [';
                 let count = 0;
                 for (let j = 0; j < $scope.matriz[i].length; j++) {
-                    if($scope.matriz[i][j] > 0){
-                        if(count === 0){
-                            relations += '' + j ;
-                        }else{
-                            relations += ',' + j ;
+                    if ($scope.matriz[i][j] > 0) {
+                        if (count === 0) {
+                            relations += '' + j;
+                        } else {
+                            relations += ',' + j;
                         }
                         count++;
                     }
                 }
-                if(i === ($scope.matriz.length - 1)){
+                if (i === ($scope.matriz.length - 1)) {
                     relations += ']';
-                }else {
+                } else {
                     relations += '],';
                 }
                 $scope.matrixToSend += relations;
@@ -82,17 +80,39 @@ angular.module('app',[])
         function sendMatrix() {
             $http.put('http://localhost:3000/graph', JSON.parse($scope.matrixToSend)).then((response) => {
                 console.log(response.data.length);
-                if(response.data.length !== 0){
+                if (response.data.length !== 0) {
                     $scope.cycle = response.data;
-                }else{
-                  $scope.cycle = 'No existe ciclo hamiltoniano';
+                    cycle(response.data);
+                } else {
+                    $scope.cycle = 'No existe ciclo hamiltoniano';
                 }
             }, (error) => {
                 console.log(error.message);
             });
         }
 
-        $scope.getNumber = function (){
+        function cycle(data) {
+            $scope.edgesCycle = [];
+            $scope.nodesCycle = [];
+            for (let i = 0; i < data.length; i++) {
+                $scope.nodesCycle.push({
+                    id: data[i], label: `${data[i]}`
+                });
+            }
+            console.log($scope.nodesCycle);
+            for (let i = 0; i <= data.length - 2; i++) {
+                $scope.edgesCycle.push({from: data[i], to: data[i + 1]});
+            }
+            console.log($scope.edgesMatrix);
+            $scope.containerCycle = document.getElementById('visualizationCycle');
+            $scope.dataCycle = {
+                nodes: $scope.nodesCycle,
+                edges: $scope.edgesCycle
+            };
+            $scope.networkCycle = new vis.Network($scope.containerCycle, $scope.dataCycle, {});
+        }
+
+        $scope.getNumber = function () {
             return $scope.rows += 1;
         };
 
@@ -142,6 +162,7 @@ angular.module('app',[])
             nodes: $scope.nodes,
             edges: $scope.edges
         };
+
         $scope.network = new vis.Network($scope.container, $scope.data, {});
 
     }]);
