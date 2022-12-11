@@ -20,7 +20,7 @@
     "body-parser": "^1.17.1",
     "cors": "^2.8.5",
     "debug-log2": "^1.0.1",
-    "express": "^4.15.2"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "mocha": "^6.2.0",
